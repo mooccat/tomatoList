@@ -1,0 +1,25 @@
+<div class="container">
+	<header class="clearfix">
+		<h1 style="color: #6cbfee">时间轴</h1>
+		<button ng-click="showAllTask()" class="right btn">全部</button>
+		<div class="form-group col-lg-4 right">
+            <select class="form-control" ng-model="select_project" ng-options="project.name as project.name for project in projectList">
+              <option value="" >选择某个项目时间轴</option>
+            </select>              
+        </div>
+	</header>	
+	<div class="main">
+		<ul class="cbp_tmtimeline">
+			<li ng-repeat="task2 in taskList | filter:{projectName:select_project} | orderBy:'task2.start' track by $index">
+				<time class="cbp_tmtime" ng-bind="task2.start" style="color: #6cbfee;font-size: 20px;font-weight: bold; "></time>
+				<div class="cbp_tmicon cbp_tmicon-phone"></div>
+				<div class="cbp_tmlabel">
+					<h2 ng-bind="task2.name"> </h2>
+					<p class="col-lg-6 col-md-6">完成时间：<span ng-bind="task2.finish"></span></p>
+					<p class="col-lg-6 col-md-6">所属项目：<span ng-bind="task2.projectName"></span></p>
+					<p ng-bind="task2.description"></p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>

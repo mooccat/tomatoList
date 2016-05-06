@@ -1,0 +1,451 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="work-content">
+            <div class="work-header">
+            <h4>所有任务<span class="glyphicon glyphicon-plus" aria-hidden="true" data-toggle="modal" data-target="#addTaskView"></span></h4>
+            <button ng-click="showAllTask()" class="right btn">全部</button>
+            <div class="form-group col-lg-4 right">
+              <select class="form-control" ng-model="select_project" ng-options="project.name as project.name for project in projectList">
+                <option value="" >选择某个项目</option>
+              </select>              
+            </div>
+             <div class="form-group col-lg-4 right">
+              <select class="form-control" ng-model="select_state">
+                <option value="" >选择状态</option>
+                <option value="未开始">未开始</option>
+                <option value="已完成">已完成</option>
+              </select>              
+            </div>
+            <div class="alert alert-danger" ng-hide="!addTaskError">{{addTaskError}}</div>
+            </div>
+
+            <uib-accordion close-others="false">
+                <uib-accordion-group is-open="open" panel-class="panel-danger">
+                  <uib-accordion-heading>
+                    重要-紧急<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open, 'glyphicon-chevron-right': !open}"></i>
+                  </uib-accordion-heading>
+                 <!--  <div class="row">
+                    <div class="col-lg-6 col-sm-12" ng-repeat="task1 in taskList | filter:{color:'red'} | filter:{projectName:select_project} | filter:{state:select_state} | orderBy:'task2.start' track by $index" >
+                      <div class="task red">
+                        <div class="task-title">
+                            <p class="col-lg-5 col-sm-5" ng-bind="task1.name"></p>
+                            <p class="col-lg-2 col-sm-2" style="font-size: 10px;">状态：</p><p class="col-lg-2 col-sm-2" ng-bind="task1.state" style="font-size: 10px;"></p>
+                            <span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span>
+                            <span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span>
+                            <span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span>
+                        </div>
+                        <div class="task-content">
+                            <div class="col-lg-4 col-sm-4">
+                              <p>开始时间：</p>
+                              <span ng-bind="task1.start"></span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4">
+                              <p>结束时间：</p>
+                              <span ng-bind="task1.finish"></span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4">
+                              <p>所属项目：</p>
+                              <span ng-bind="task1.projectName"></span>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+                  <table class="table table-hover table-bordered table-responsive">
+                    <tr>
+                      <th>任务名</th>
+                      <th>开始时间</th>
+                      <th>结束时间</th>
+                      <th>所属项目</th>
+                      <th>状态</th>
+                      <th>  开始</th>
+                      <th>修改</th>
+                      <th>删除</th>
+                    </tr>
+                    <tr class="danger" ng-repeat="task1 in taskList | filter:{color:'red'} | filter:{projectName:select_project} | filter:{state:select_state} | orderBy:'task1.start' track by $index">
+                      <td ng-bind="task1.name"></td>
+                      <td ng-bind="task1.start"></td>
+                      <td ng-bind="task1.finish"></td>
+                      <td ng-bind="task1.projectName"></td>
+                      <td ng-bind="task1.state"></td>
+                      <td><span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span></td>
+                    </tr>
+                  </table>
+                </uib-accordion-group>
+
+                <uib-accordion-group is-open="open1" panel-class="panel-warning">
+                  <uib-accordion-heading>
+                    重要-不紧急 <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open1, 'glyphicon-chevron-right':!open1}"></i>
+                  </uib-accordion-heading>
+                    <!-- <div class="row">
+                      <div class="col-lg-6 col-sm-12" ng-repeat="task1 in taskList | filter:{color:'orange'} | filter:{projectName:select_project}  | filter:{state:select_state} | orderBy:'task2.start' track by $index">
+                        <div class="task orange">
+                          <div class="task-title">
+                              <p class="col-lg-5 col-sm-5" ng-bind="task1.name"></p>
+                              <p class="col-lg-2 col-sm-2" style="font-size: 10px;">状态：</p><p class="col-lg-2 col-sm-2" ng-bind="task1.state" style="font-size: 10px;"></p>
+                              <span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span>
+                              <span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span>
+                              <span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span>
+                          </div>
+                          <div class="task-content">
+                              <div class="col-lg-4 col-sm-4">
+                                <p>开始时间：</p>
+                                <span ng-bind="task1.start"></span>
+                              </div>
+                              <div class="col-lg-4 col-sm-4">
+                                <p>结束时间：</p>
+                                <span ng-bind="task1.finish"></span>
+                              </div>
+                              <div class="col-lg-4 col-sm-4">
+                                <p>所属项目：</p>
+                                <span ng-bind="task1.projectName"></span>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  <table class="table table-hover table-bordered table-responsive">
+                    <tr>
+                      <th>任务名</th>
+                      <th>开始时间</th>
+                      <th>结束时间</th>
+                      <th>所属项目</th>
+                      <th>状态</th>
+                      <th>  开始</th>
+                      <th>修改</th>
+                      <th>删除</th>
+                    </tr>
+                    <tr class="warning" ng-repeat="task1 in taskList | filter:{color:'orange'} | filter:{projectName:select_project} | filter:{state:select_state} | orderBy:'task1.start' track by $index">
+                      <td ng-bind="task1.name"></td>
+                      <td ng-bind="task1.start"></td>
+                      <td ng-bind="task1.finish"></td>
+                      <td ng-bind="task1.projectName"></td>
+                      <td ng-bind="task1.state"></td>
+                      <td><span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span></td>
+                    </tr>
+                  </table>
+                  </uib-accordion-group>
+                <uib-accordion-group is-open="open2" panel-class="panel-info">
+                  <uib-accordion-heading>
+                    不重要-紧急 <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open1, 'glyphicon-chevron-right':!open1}"></i>
+                  </uib-accordion-heading>
+                   <!--  <div class="row">
+                      <div class="col-lg-6 col-sm-12" ng-repeat="task1 in taskList | filter:{color:'blue'} | filter:{projectName:select_project} | filter:{state:select_state} | orderBy:'task2.start' track by $index">
+                        <div class="task blue">
+                          <div class="task-title">
+                              <p class="col-lg-5 col-sm-5" ng-bind="task1.name"></p>
+                              <p class="col-lg-2 col-sm-2" style="font-size: 10px;">状态：</p><p class="col-lg-2 col-sm-2" ng-bind="task1.state" style="font-size: 10px;"></p>
+                              <span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span>
+                              <span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span>
+                              <span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span>
+                          </div>
+                          <div class="task-content">
+                              <div class="col-lg-4 col-sm-4">
+                                <p>开始时间：</p>
+                                <span ng-bind="task1.start"></span>
+                              </div>
+                              <div class="col-lg-4 col-sm-4">
+                                <p>结束时间：</p>
+                                <span ng-bind="task1.finish"></span>
+                              </div>
+                              <div class="col-lg-4 col-sm-4">
+                                <p>所属项目：</p>
+                                <span ng-bind="task1.projectName"></span>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  <table class="table table-hover table-bordered table-responsive">
+                    <tr>
+                      <th>任务名</th>
+                      <th>开始时间</th>
+                      <th>结束时间</th>
+                      <th>所属项目</th>
+                      <th>状态</th>
+                      <th>  开始</th>
+                      <th>修改</th>
+                      <th>删除</th>
+                    </tr>
+                    <tr class="info" ng-repeat="task1 in taskList | filter:{color:'blue'} | filter:{projectName:select_project} | filter:{state:select_state} | orderBy:'task1.start' track by $index">
+                      <td ng-bind="task1.name"></td>
+                      <td ng-bind="task1.start"></td>
+                      <td ng-bind="task1.finish"></td>
+                      <td ng-bind="task1.projectName"></td>
+                      <td ng-bind="task1.state"></td>
+                      <td><span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span></td>
+                    </tr>
+                  </table>
+                  </uib-accordion-group>     
+                <uib-accordion-group is-open="open3" panel-class="panel-success">
+                  <uib-accordion-heading>
+                    不重要-不紧急 <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': open1, 'glyphicon-chevron-right':!open1}"></i>
+                  </uib-accordion-heading >
+                    <!-- <div class="row">
+                      <div class="col-lg-6 col-sm-12" ng-repeat="task1 in taskList | filter:{color:'green'} | filter:{projectName: select_project} | filter:{state:select_state} | orderBy:'task2.start' track by $index ">
+                        <div class="task green">
+                          <div class="task-title">
+                              <p class="col-lg-5 col-sm-5" ng-bind="task1.name"></p>
+                              <p class="col-lg-2 col-sm-2" style="font-size: 10px;">状态：</p><p class="col-lg-2 col-sm-2" ng-bind="task1.state" style="font-size: 10px;"></p>
+                              <span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true"  data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span>
+                              <span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span>
+                              <span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span>
+                          </div>
+                          <div class="task-content">
+                              <div class="col-lg-4 col-sm-4">
+                                <p>开始时间：</p>
+                                <span ng-bind="task1.start"></span>
+                              </div>
+                              <div class="col-lg-4 col-sm-4">
+                                <p>结束时间：</p>
+                                <span ng-bind="task1.finish"></span>
+                              </div>
+                              <div class="col-lg-4 col-sm-4">
+                                <p>所属项目：</p>
+                                <span ng-bind="task1.projectName"></span>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  <table class="table table-hover table-bordered table-responsive">
+                    <tr>
+                      <th>任务名</th>
+                      <th>开始时间</th>
+                      <th>结束时间</th>
+                      <th>所属项目</th>
+                      <th>状态</th>
+                      <th>  开始</th>
+                      <th>修改</th>
+                      <th>删除</th>
+                    </tr>
+                    <tr class="success" ng-repeat="task1 in taskList | filter:{color:'green'} | filter:{projectName:select_project} | filter:{state:select_state} | orderBy:'task1.start' track by $index">
+                      <td ng-bind="task1.name"></td>
+                      <td ng-bind="task1.start"></td>
+                      <td ng-bind="task1.finish"></td>
+                      <td ng-bind="task1.projectName"></td>
+                      <td ng-bind="task1.state"></td>
+                      <td><span class="glyphicon glyphicon-bookmark col-lg-1 col-sm-1" aria-hidden="true" data-target="#pomodoro"  data-toggle="modal" ng-click="pomodoro(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1" aria-hidden="true" data-target="#modifyTaskView"  data-toggle="modal" ng-click="modifyTaskView(task1)"></span></td>
+                      <td><span class="glyphicon glyphicon-remove col-lg-1 col-sm-1" aria-hidden="true" ng-click="deleteTask(task1)"></span></td>
+                    </tr>
+                  </table>
+                  </uib-accordion-group>         
+            </uib-accordion>
+        </div>   
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addTaskView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加任务</h4>
+      </div>
+      <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="taskName">任务名:</label>
+                <input type="text" class="form-control" id="taskName" placeholder="taskName" ng-model="task.name">
+              </div>
+              <div class="form-group">
+                <label for="taskDes">描述:</label>
+                <textarea class="form-control" rows="3" ng-model="task.description"></textarea>
+              </div>
+              <div class="form-group">
+                      <label for="projectName">选择所属项目(不选则为默认)</label>
+                      <select class="form-control" ng-model="task.projectName" ng-options="project.name as project.name for project in projectList">
+                        <option value="">选择所属项目（不选则为默认）</option>
+                      </select>              
+              </div>
+              <div class="form-group">
+                <label>
+                  <input type="radio" name="color" value="red" ng-model="task.color"> 重要-紧急
+                </label>
+                <label>
+                  <input type="radio" name="color" value="orange" ng-model="task.color"> 重要-不紧急
+                </label>
+                <label>
+                  <input type="radio" name="color" value="blue" ng-model="task.color"> 不重要-紧急
+                </label>
+                <label>
+                  <input type="radio" name="color" value="green" ng-model="task.color"> 不重要-不紧急
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="start" class="col-md-2">开始:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="2016-09-16T05:25:07Z" data-date-format="yyyy mm dd - hh:ii " data-link-field="start">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="task.start">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="start" value="" /><br/>
+             </div>
+              <div class="form-group">
+                <label for="finish" class="col-md-2">结束:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="2016-09-16T05:25:07Z" data-date-format="yyyy mm dd - hh:ii " data-link-field="finish">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="task.finish">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="finish" value="" /><br/>
+             </div>
+              <div class="form-group form-inline" style="float: left;margin-right: 20px;">
+                <label for="number">番茄钟个数:</label>
+                <input type="number" class="form-control" id="number" placeholder="番茄钟个数" ng-model="task.pomodoro.number">
+              </div>
+              <div class="form-group form-inline">
+                <label for="length">番茄钟时间:  </label>
+                <input type="number" class="form-control" id="length" placeholder="番茄钟时间(分钟)" ng-model="task.pomodoro.leng">
+              </div>
+              <div class="form-group">
+                <label for="rest">番茄钟休息时间:</label>
+                <input type="number" class="form-control" id="rest" placeholder="番茄钟休息时间(分钟)" ng-model="task.pomodoro.rest">
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addTask()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modifyTaskView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改任务</h4>
+      </div>
+      <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="taskName">任务名:</label>
+                <input type="text" class="form-control" id="taskName" placeholder="taskName" ng-model="taskC.name">
+              </div>
+              <div class="form-group">
+                <label for="taskDes">描述:</label>
+                <textarea class="form-control" rows="3" ng-model="taskC.description"></textarea>
+              </div>
+              <div class="form-group">
+                      <label for="projectName">选择所属项目(不选则为默认)</label>
+                      <select class="form-control" ng-model="taskC.projectName" ng-options="project.name as project.name for project in projectList">
+                        <option value="">选择所属项目（不选则为默认）</option>
+                      </select>
+              </div>
+              <div class="form-group">
+                <label>
+                  <input type="radio" name="color" value="red" ng-model="taskC.color"> 紧急-重要
+                </label>
+                <label>
+                  <input type="radio" name="color" value="blue" ng-model="taskC.color"> 紧急-不重要
+                </label>
+                <label>
+                  <input type="radio" name="color" value="orange" ng-model="taskC.color"> 不紧急-重要
+                </label>
+                <label>
+                  <input type="radio" name="color" value="green" ng-model="taskC.color"> 不紧急-不重要
+                </label>
+              </div>
+              <div class="form-group">
+                <label for="start" class="col-md-2">开始:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="" data-date-format="yyyy mm dd - hh:ii " data-link-field="start">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="taskC.start">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="start" value="" /><br/>
+             </div>
+              <div class="form-group">
+                <label for="finish" class="col-md-2">结束:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="2016-09-16T05:25:07Z" data-date-format="yyyy mm dd - hh:ii " data-link-field="finish">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="taskC.finish">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="finish" value="" /><br/>
+             </div>
+              <div class="form-group form-inline" style="float: left;margin-right: 20px;">
+                <label for="number">番茄钟个数:</label>
+                <input type="number" class="form-control" id="number" placeholder="番茄钟个数" ng-model="taskC.pomodoro.number">
+              </div>
+              <div class="form-group form-inline">
+                <label for="length">番茄钟时间:  </label>
+                <input type="number" class="form-control" id="length" placeholder="番茄钟时间(分钟)" ng-model="taskC.pomodoro.leng">
+              </div>
+              <div class="form-group">
+                <label for="rest">番茄钟休息时间:</label>
+                <input type="number" class="form-control" id="rest" placeholder="番茄钟休息时间(分钟)" ng-model="taskC.pomodoro.rest">
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="modifyTask()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="pomodoro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">番茄钟</h4>
+      </div>
+      <div class="modal-body">
+          <div style="height: 68px;">          
+            <h4 class="col-lg-6 col-sm-6">任务名：<span ng-bind="taskD.name" style="color: #31708f;"></span></h4>
+            <h4 class="col-lg-6 col-sm-6">所属项目：<span ng-bind="taskD.projectName" style="color: #31708f;"></span></h4>
+            <h4 class="col-lg-6 col-sm-6">开始时间：<span ng-bind="taskD.start" style="color: #31708f;"></span></h4>
+            <h4 class="col-lg-6 col-sm-6">结束时间：<span ng-bind="taskD.finish" style="color: #31708f;"></span></h4>
+          </div>
+          <div class="pomodoro-content">
+            <div class="clock">
+              <span class="clock_m" ng-bind="pomodoro.leng"></span>
+              <span>:</span>
+              <span class="clock_s" ng-bind="pomodoro.second"></span>
+            </div>
+            <div class="clock-btn">
+              <button class="btn btn-info" ng-click="startPomodoro(taskD)">开始番茄钟</button>
+              <button class="btn btn-warning" ng-click="stopPomodoro(taskD)">中断番茄钟</button>
+              <button class="btn btn-success" ng-click="startRestPomodoro(taskD)">开始休息番茄钟</button>
+              <button class="btn btn-danger" ng-click="finishTask(taskD)">已经完成任务</button>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="stopPomodoro(taskD)">中断番茄钟并退出</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="finishTask(taskD)">完成</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+       $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>

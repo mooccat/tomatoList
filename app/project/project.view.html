@@ -1,0 +1,130 @@
+<div>
+	<div class="projectHeader">
+		<div class="left"><span>项目</span></div>
+		<div class="right"><span class="glyphicon glyphicon-plus" aria-hidden="true" data-toggle="modal" data-target="#addProjectView"></span></div>
+	</div>
+<div style="clear: both;"></div>
+<div class="col-lg-5 project" ng-repeat="project1 in projectList">
+  <div class="project-button"> 
+    <span class="glyphicon glyphicon-remove col-lg-1 col-sm-1 right" aria-hidden="true" ng-click="deleteProject(project1)"></span>
+    <span class="glyphicon glyphicon-pencil col-lg-1 col-sm-1 right" aria-hidden="true" data-target="#modifyProjectView"  data-toggle="modal" ng-click="modifyProjectView(project1)"></span>
+  </div>
+  <div class="project-title col-lg-4 col-sm-4" ng-bind="project1.name"></div>
+  <div class="project-time co-lg-4 col-sm-4">
+    <p>开始时间：</p>
+    <span ng-bind="project1.start"></span>
+  </div>
+    <div class="project-time co-lg-4 col-sm-4">
+    <p>结束时间</p>
+    <span ng-bind="project1.finish "></span>
+  </div>
+  <div class="project-data">
+      <p class="left project-data-boder"><span>2</span><br/>总任务</p>
+      <p><span>2</span><br/>已完成</p>
+  </div>
+</div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addProjectView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加项目</h4>
+      </div>
+      <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="projectName">项目名:</label>
+                <input type="text" class="form-control" id="projectName" placeholder="projectName" ng-model="project.name">
+              </div>
+              <div class="form-group">
+                <label for="projectDes">描述:</label>
+                <textarea class="form-control" rows="3" ng-model="project.description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="start" class="col-md-2">开始:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="2016-09-16T05:25:07Z" data-date-format="yyyy mm dd - hh:ii " data-link-field="start">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="project.start">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="start" value="" /><br/>
+             </div>
+              <div class="form-group">
+                <label for="finish" class="col-md-2">结束:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="2016-09-16T05:25:07Z" data-date-format="yyyy mm dd - hh:ii " data-link-field="finish">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="project.finish">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="finish" value="" /><br/>
+             </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addProject()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modifyProjectView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改项目</h4>
+      </div>
+      <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="projectName">项目名:</label>
+                <input type="text" class="form-control" id="projectName" placeholder="projectName" ng-model="projectC.name">
+              </div>
+              <div class="form-group">
+                <label for="projectDes">描述:</label>
+                <textarea class="form-control" rows="3" ng-model="projectC.description"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="start" class="col-md-2">开始:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="" data-date-format="yyyy mm dd - hh:ii " data-link-field="start">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="projectC.start">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="start" value="" /><br/>
+             </div>
+              <div class="form-group">
+                <label for="finish" class="col-md-2">结束:</label>
+                <div class="input-group date form_datetime col-md-8" data-date="" data-date-format="yyyy mm dd - hh:ii " data-link-field="finish">
+                    <input class="form-control" size="16" type="text" value="" readonly ng-model="projectC.finish">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="finish" value="" /><br/>
+             </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="modifyProject()">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+       $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1
+    });
+</script>

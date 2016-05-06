@@ -1,0 +1,200 @@
+body{
+	font-family: Microsoft YaHei;
+	background-color: #eeece8;
+}
+.navbar{
+	background-color: #1a86c0;
+	color: #fff;
+	margin-bottom: 0px;
+}
+.navbar a{
+	color: #fff;
+	border-radius: 4px;
+}
+.navbar a:hover{
+	color: #777;
+}
+#header{
+	position: fixed;
+	height: 100%;
+	width: 110px;
+	text-align: center;
+	background: white linear-gradient(80deg, #0b4182 1%, #1a78cf 99%) repeat scroll 0% 0%;
+}
+#header a{
+	display: block;
+    margin-bottom: 32px;
+    position: relative;
+    color: #a1c8ee;
+    font-weight: bold;
+    font-size: 15px;
+    height: 60px;
+    line-height: 30px;
+    text-decoration: none;
+}
+#header-top a{
+	line-height: 100px;
+}
+#header a:hover{
+	color: #fff;
+}
+#header a:active{
+	color: #fff;
+	border-right: 10px solid #fff;
+}
+.active{
+	color: #fff;
+	border: 2px solid #fff;
+	border-radius: 5px;
+}
+#header-bottom a{
+	cursor: pointer;
+	position: absolute;
+	bottom: 0px;
+	width: 110px;
+}
+
+#me{
+	margin-left: 110px;
+}
+.work-content{
+	background-color: #fff;
+	margin: 10px;
+	border-radius: 5px;
+	padding: 10px 20px;
+}
+.work-header{
+	height: 70px;
+}
+.work-header h4{
+	font-weight: 300;
+	font-size: 16px;
+}
+.work-header span{
+	float: right;
+	color: #1e88e5;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+.task{
+	height: 90px;
+	border:1px solid #ddd;
+	border-radius: 5px;
+	color: #fff;
+	margin-bottom: 15px;
+}
+.red{
+	background-color: #ea6153;
+}
+.orange{
+	background-color: #f39c12;
+}
+.blue{
+	background-color: #3498db;
+}
+.green{
+	background-color: #1abc9c;
+}
+.task-title{
+	height: 25px;
+	line-height: 25px;
+	font-size: 20px;
+}
+.task-title span{
+	line-height: 25px;
+	font-size: 10px;
+	cursor: pointer;
+	text-align: center;
+}
+.task-content{
+	clear: both;
+}
+
+.projectHeader{
+	width: 100%;
+	height: 50px;
+	background-color: #fff;
+	line-height: 50px;
+	border-bottom: #1a78cf solid 1px;
+}
+.projectHeader span{
+	margin:0px 20px;
+	font-size: 15px;
+	font-weight: 700;
+	color: #1a78cf; 
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
+	cursor: pointer;
+}
+.project{
+	height: 127px;
+	background-color: #FFF;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	box-shadow: 0 0 3px 1px #eee;
+	margin: 15px;
+	position: relative;
+}
+
+.project-title{
+	font-size: 18px;
+    line-height: 36px;
+    height: 73px;
+    overflow: hidden;
+    padding: 18px 18px 0;
+    word-break: break-all;
+    text-align: center;
+    font-weight: bold;
+}
+.project-data{
+	position: absolute;
+    width: 100%;
+    left: 5px;
+    padding: 8px;
+    border-top: 1px dashed #e5e5e5;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    margin-top: 73px;
+}
+.project-data p{
+	width: 50%;
+	text-align: center;
+	float: left;
+}
+.project-data-boder{
+	border-right: 1px solid #e5e5e5;
+}
+.project-button{
+	position: absolute;
+	right: 15px;
+	top: 10px;
+	color: #1a78cf;
+	z-index: 999;
+}
+.project-time{
+	font-size: 12px;
+	line-height: 27px;
+}
+.clock{
+	background-color: #EFEFEF;
+	height: 300px;
+	margin: 50px 15px;
+	display: block;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: 3px #eee;
+}
+.clock span{
+	color: #31708f;
+	font-size: 200px;
+	line-height: 300px;
+}
+.clock-btn{
+	margin-left: 15px;
+}
